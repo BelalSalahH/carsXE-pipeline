@@ -65,16 +65,6 @@ The curated approach is **stable** (re-runs are deterministic and never break on
 - A **plausibility pass** flags out-of-range MSRP/HP/seating/dimensions for human review (the
   current dataset produces no warnings).
 
-## Known gaps / what I'd do with more time
-
-- **Powertrain variants per trim:** only the base engine is recorded (e.g., Camry FWD 225 hp; the
-  AWD 232 hp variant and RAV4/Tacoma hybrid/PHEV options are noted but not separate records).
-- **Higher-precision dimensions:** RAV4 figures are whole-inch from the source; Tacoma per-cab
-  length/wheelbase and per-trim height need a structured OEM spec sheet to fill the `null`s.
-- **Multi-source reconciliation:** confirm each field against the Toyota Newsroom PDF spec sheets
-  programmatically, with a per-field confidence/source.
-- **NHTSA vPIC cross-check** to validate make/model/year consistency.
-
 ## Scheduling re-runs (design, not deployed)
 
 Run `python -m collector.build` on a monthly cron — e.g. a GitHub Actions scheduled workflow.
