@@ -47,3 +47,52 @@ def test_to_float_strips_units():
     assert to_float(56.9) == 56.9
     assert to_float("") is None
     assert to_float(None) is None
+
+
+from collector.normalize import normalize_row
+from collector.models import TrimSpec
+
+
+def _raw_row(**overrides):
+    row = {
+        "year": 2026, "spec_year": 2026, "make": "Toyota",
+        "model": "Camry", "trim": "LE", "base_msrp": "28,700",
+        "fuel_type": "Hybrid", "horsepower": "225 hp", "drivetrain": "FWD",
+        "seating_capacity": 5,
+        "dimensions": {"length": "193.5 in", "width": "72.2 in",
+                       "height": "56.9 in", "wheelbase": "111.2 in"},
+        "source_url": "https://example.com", "as_of": "2026-06-09", "notes": None,
+    }
+    row.update(overrides)
+    return row
+
+
+def test_normalize_row_full():
+    spec = normalize_row(_raw_row())
+    assert isinstance(spec, TrimSpec)
+    assert spec.key == "Toyota|Camry|2026|LE"
+    assert spec.base_msrp_usd == 28700
+    assert spec.fuel_type == "hybrid"
+    assert spec.horsepower_hp == 225
+    assert spec.drivetrain == "FWD"
+    assert spec.seating_capacity == 5
+    assert spec.dimensions_in == {
+        "length": 193.5, "width": 72.2, "height": 56.9, "wheelbase": 111.2
+    }
+    assert spec.source_url == "https://example.com"
+
+
+def test_normalize_row_missing_fields_become_null():
+    spec = normalize_row(_raw_row(base_msrp=None, horsepower="", dimensions={}))
+    assert spec.base_msrp_usd is None
+    assert spec.horsepower_hp is None
+    assert spec.dimensions_in == {
+        "length": None, "width": None, "height": None, "wheelbase": None
+    }
+
+
+def test_normalize_row_spec_year_defaults_to_year():
+    row = _raw_row()
+    del row["spec_year"]
+    spec = normalize_row(row)
+    assert spec.spec_year == 2026
