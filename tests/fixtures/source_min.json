@@ -1,0 +1,24 @@
+[
+  {
+    "year": 2026, "spec_year": 2026, "make": "TestMake", "model": "Alpha", "trim": "Base",
+    "base_msrp": "20,000", "fuel_type": "Gas", "horsepower": "150 hp", "drivetrain": "FWD",
+    "seating_capacity": 5,
+    "dimensions": {"length": "180 in", "width": "70 in", "height": "55 in", "wheelbase": "105 in"},
+    "source_url": "https://example.com/alpha", "as_of": "2026-06-09", "notes": null
+  },
+  {
+    "year": 2026, "spec_year": 2025, "make": "TestMake", "model": "Beta", "trim": "Sport",
+    "base_msrp": null, "fuel_type": "Hybrid", "horsepower": "", "drivetrain": "AWD",
+    "seating_capacity": 5,
+    "dimensions": {"length": "185 in", "width": "72 in", "height": "58 in", "wheelbase": "108 in"},
+    "source_url": "https://example.com/beta", "as_of": "2026-06-09",
+    "notes": "2026 specs unpublished; using 2025"
+  },
+  {
+    "year": 2026, "spec_year": 2026, "make": "TestMake", "model": "Alpha", "trim": "Base",
+    "base_msrp": "21,000", "fuel_type": "Gas", "horsepower": "150 hp", "drivetrain": "FWD",
+    "seating_capacity": 5,
+    "dimensions": {"length": "180 in", "width": "70 in", "height": "55 in", "wheelbase": "105 in"},
+    "source_url": "https://example.com/alpha-dup", "as_of": "2026-06-09", "notes": null
+  }
+]
