@@ -1,0 +1,138 @@
+{
+  "make": "Toyota",
+  "source": "Toyota USA model specs (toyota.com) — curated 2026, verify against OEM before downstream use",
+  "trims": [
+    {
+      "year": 2026,
+      "model": "Camry",
+      "trim": "LE",
+      "base_msrp": 28700,
+      "fuel_type": "Hybrid",
+      "horsepower": 225,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 193.5, "width": 72.2, "height": 56.9, "wheelbase": 111.2}
+    },
+    {
+      "year": 2026,
+      "model": "Camry",
+      "trim": "SE",
+      "base_msrp": 31000,
+      "fuel_type": "Hybrid",
+      "horsepower": 225,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 193.5, "width": 72.2, "height": 56.9, "wheelbase": 111.2}
+    },
+    {
+      "year": 2026,
+      "model": "Camry",
+      "trim": "XLE",
+      "base_msrp": 33700,
+      "fuel_type": "Hybrid",
+      "horsepower": 225,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 193.5, "width": 72.2, "height": 56.9, "wheelbase": 111.2}
+    },
+    {
+      "year": 2026,
+      "model": "Camry",
+      "trim": "XSE AWD",
+      "base_msrp": 36900,
+      "fuel_type": "Hybrid",
+      "horsepower": 232,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 193.5, "width": 72.2, "height": 56.9, "wheelbase": 111.2}
+    },
+    {
+      "year": 2026,
+      "model": "RAV4",
+      "trim": "LE",
+      "base_msrp": 30000,
+      "fuel_type": "Gas",
+      "horsepower": 203,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 180.9, "width": 73.0, "height": 67.0, "wheelbase": 105.9}
+    },
+    {
+      "year": 2026,
+      "model": "RAV4",
+      "trim": "Adventure",
+      "base_msrp": 37000,
+      "fuel_type": "Gas",
+      "horsepower": 203,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 180.9, "width": 73.0, "height": 68.6, "wheelbase": 105.9}
+    },
+    {
+      "year": 2026,
+      "model": "RAV4",
+      "trim": "XLE Hybrid",
+      "base_msrp": 33000,
+      "fuel_type": "Hybrid",
+      "horsepower": 219,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 180.9, "width": 73.0, "height": 67.0, "wheelbase": 105.9}
+    },
+    {
+      "year": 2026,
+      "model": "RAV4",
+      "trim": "Limited Hybrid",
+      "base_msrp": 40000,
+      "fuel_type": "Hybrid",
+      "horsepower": 219,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 180.9, "width": 73.0, "height": 67.0, "wheelbase": 105.9}
+    },
+    {
+      "year": 2026,
+      "model": "Tacoma",
+      "trim": "SR",
+      "base_msrp": 31500,
+      "fuel_type": "Gas",
+      "horsepower": 228,
+      "drivetrain": "Rear-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 213.0, "width": 76.9, "height": 71.0, "wheelbase": 145.1}
+    },
+    {
+      "year": 2026,
+      "model": "Tacoma",
+      "trim": "TRD Off-Road",
+      "base_msrp": 42000,
+      "fuel_type": "Gas",
+      "horsepower": 278,
+      "drivetrain": "4WD",
+      "seating_capacity": 5,
+      "dimensions": {"length": 213.0, "width": 76.9, "height": 72.6, "wheelbase": 145.1}
+    },
+    {
+      "year": 2026,
+      "model": "Tacoma",
+      "trim": "Limited i-FORCE MAX",
+      "base_msrp": 53000,
+      "fuel_type": "Hybrid",
+      "horsepower": 326,
+      "drivetrain": "4WD",
+      "seating_capacity": 5,
+      "dimensions": {"length": 213.0, "width": 76.9, "height": 71.5, "wheelbase": 145.1}
+    },
+    {
+      "year": 2026,
+      "model": "Tacoma",
+      "trim": "TRD Pro",
+      "base_msrp": 64000,
+      "fuel_type": "Hybrid",
+      "horsepower": 326,
+      "drivetrain": "4WD",
+      "seating_capacity": 5,
+      "dimensions": {"length": 213.0, "width": 79.9, "height": null, "wheelbase": 145.1}
+    }
+  ]
+}

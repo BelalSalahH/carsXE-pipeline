@@ -1,0 +1,138 @@
+{
+  "make": "Honda",
+  "source": "Honda USA model specs (honda.com / automobiles.honda.com) — curated 2026, verify against OEM before downstream use",
+  "trims": [
+    {
+      "year": 2026,
+      "model": "Civic",
+      "trim": "LX",
+      "base_msrp": 24500,
+      "fuel_type": "Gas",
+      "horsepower": 150,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.0, "width": 70.9, "height": 55.7, "wheelbase": 107.7}
+    },
+    {
+      "year": 2026,
+      "model": "Civic",
+      "trim": "Sport",
+      "base_msrp": 26500,
+      "fuel_type": "Gas",
+      "horsepower": 150,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.0, "width": 70.9, "height": 55.7, "wheelbase": 107.7}
+    },
+    {
+      "year": 2026,
+      "model": "Civic",
+      "trim": "Sport Touring Hybrid",
+      "base_msrp": 30500,
+      "fuel_type": "Hybrid",
+      "horsepower": 200,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.0, "width": 70.9, "height": 55.7, "wheelbase": 107.7}
+    },
+    {
+      "year": 2026,
+      "model": "Civic",
+      "trim": "Si",
+      "base_msrp": 31000,
+      "fuel_type": "Gas",
+      "horsepower": 200,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 185.0, "width": 70.9, "height": 55.5, "wheelbase": 107.7}
+    },
+    {
+      "year": 2026,
+      "model": "Accord",
+      "trim": "LX",
+      "base_msrp": 28000,
+      "fuel_type": "Gas",
+      "horsepower": 192,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 195.7, "width": 73.3, "height": 57.1, "wheelbase": 111.4}
+    },
+    {
+      "year": 2026,
+      "model": "Accord",
+      "trim": "EX",
+      "base_msrp": 30500,
+      "fuel_type": "Gas",
+      "horsepower": 192,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 195.7, "width": 73.3, "height": 57.1, "wheelbase": 111.4}
+    },
+    {
+      "year": 2026,
+      "model": "Accord",
+      "trim": "Sport Hybrid",
+      "base_msrp": 34000,
+      "fuel_type": "Hybrid",
+      "horsepower": 204,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 195.7, "width": 73.3, "height": 57.1, "wheelbase": 111.4}
+    },
+    {
+      "year": 2026,
+      "model": "Accord",
+      "trim": "Touring Hybrid",
+      "base_msrp": 39000,
+      "fuel_type": "Hybrid",
+      "horsepower": 204,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 195.7, "width": 73.3, "height": 57.1, "wheelbase": 111.4}
+    },
+    {
+      "year": 2026,
+      "model": "CR-V",
+      "trim": "LX",
+      "base_msrp": 30500,
+      "fuel_type": "Gas",
+      "horsepower": 190,
+      "drivetrain": "Front-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.8, "width": 73.5, "height": 66.5, "wheelbase": 106.3}
+    },
+    {
+      "year": 2026,
+      "model": "CR-V",
+      "trim": "EX-L",
+      "base_msrp": 36000,
+      "fuel_type": "Gas",
+      "horsepower": 190,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.8, "width": 73.5, "height": 66.5, "wheelbase": 106.3}
+    },
+    {
+      "year": 2026,
+      "model": "CR-V",
+      "trim": "Sport Hybrid",
+      "base_msrp": 35000,
+      "fuel_type": "Hybrid",
+      "horsepower": 204,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.8, "width": 73.5, "height": 66.5, "wheelbase": 106.3}
+    },
+    {
+      "year": 2026,
+      "model": "CR-V",
+      "trim": "Sport Touring Hybrid",
+      "base_msrp": 40500,
+      "fuel_type": "Hybrid",
+      "horsepower": 204,
+      "drivetrain": "All-Wheel Drive",
+      "seating_capacity": 5,
+      "dimensions": {"length": 184.8, "width": 73.5, "height": 66.5, "wheelbase": 106.3}
+    }
+  ]
+}
