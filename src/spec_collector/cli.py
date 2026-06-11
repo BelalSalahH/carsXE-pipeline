@@ -45,6 +45,11 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Output path (default: output.json).",
     )
     parser.add_argument(
+        "--refresh-sources",
+        action="store_true",
+        help="Force a live re-fetch of external sources (e.g. EPA) and update the cache.",
+    )
+    parser.add_argument(
         "--log-level",
         default="INFO",
         help="Logging level (default: INFO).",
@@ -59,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
     makes = available_makes() if args.make.strip().lower() == "all" else [args.make]
 
     try:
-        run(makes, args.models, args.out)
+        run(makes, args.models, args.out, refresh=args.refresh_sources)
     except SpecCollectorError as exc:
         log.error("%s", exc)
         return 1

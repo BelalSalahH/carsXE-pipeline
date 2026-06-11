@@ -20,11 +20,11 @@ def available_makes() -> list[str]:
     return sorted(_PROVIDERS)
 
 
-def get_provider(make: str) -> OEMProvider:
+def get_provider(make: str, *, refresh: bool = False) -> OEMProvider:
     key = make.strip().lower()
     provider_cls = _PROVIDERS.get(key)
     if provider_cls is None:
         raise UnknownMakeError(
             f"unknown make {make!r}; available: {', '.join(available_makes())}"
         )
-    return provider_cls()
+    return provider_cls(refresh=refresh)

@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "source": "EPA fueleconomy.gov web services",
+    "url": "https://www.fueleconomy.gov/ws/rest/vehicle/",
+    "fetched_at": "2026-06-11",
+    "note": "drivetrain is authoritative and uniform per EPA model name; fuel/HP/MSRP are not provided by EPA and stay curated"
+  },
+  "entries": {
+    "2026|Accord": "Front-Wheel Drive",
+    "2026|Accord Hybrid Sport/Touring": "Front-Wheel Drive",
+    "2026|Civic 4Dr": "Front-Wheel Drive",
+    "2026|CR-V FWD": "Front-Wheel Drive",
+    "2026|CR-V AWD": "All-Wheel Drive"
+  }
+}

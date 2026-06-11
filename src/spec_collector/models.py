@@ -60,6 +60,9 @@ class Trim:
     dimensions: Dimensions = field(default_factory=Dimensions)
     notes: str | None = None
     source: str | None = None
+    # Per-field provenance: field name -> source id (e.g. "epa:fueleconomy.gov",
+    # "curated:honda.com"). Lets a multi-source record show where each value came from.
+    sources: dict[str, str] = field(default_factory=dict)
 
     @property
     def key(self) -> tuple[int, str, str, str]:
@@ -79,4 +82,5 @@ class Trim:
             "dimensions": self.dimensions.to_dict(),
             "notes": self.notes,
             "source": self.source,
+            "sources": self.sources,
         }

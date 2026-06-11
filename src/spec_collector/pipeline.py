@@ -43,12 +43,18 @@ def _count_nulls(trim: Trim) -> int:
     return nulls
 
 
-def run(makes: list[str], models: list[str] | None, out_path: Path) -> RunSummary:
+def run(
+    makes: list[str],
+    models: list[str] | None,
+    out_path: Path,
+    *,
+    refresh: bool = False,
+) -> RunSummary:
     summary = RunSummary()
     deduped: dict[tuple[int, str, str, str], Trim] = {}
 
     for make in makes:
-        provider = get_provider(make)
+        provider = get_provider(make, refresh=refresh)
         raw_records = provider.collect(models)
         kept = 0
 

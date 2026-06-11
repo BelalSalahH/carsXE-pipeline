@@ -1,3 +1,5 @@
-# Runtime has no third-party dependencies (stdlib only).
+# Runtime:
+certifi>=2024.0.0   # CA bundle for live source fetches (e.g. EPA fueleconomy.gov)
+
 # Dev / test:
 pytest>=8.0

@@ -105,19 +105,46 @@ def normalize_record(raw: dict) -> Trim:
         wheelbase_in=_to_float(dims_raw.get("wheelbase")),
     )
 
+    base_msrp = _to_int(raw.get("base_msrp"))
+    fuel_type = _map_fuel(raw.get("fuel_type"))
+    horsepower = _to_int(raw.get("horsepower"))
+    drivetrain = _map_drivetrain(raw.get("drivetrain"))
+    seating_capacity = _to_int(raw.get("seating_capacity"))
+    dims_present = any(v is not None for v in dimensions.to_dict().values())
+
+    # Provenance: per-field source id. A provider may pass `field_sources` to
+    # override specific fields (multi-source); everything else falls back to the
+    # record's `source`. Null fields are not attributed to any source.
+    field_sources: dict[str, str] = raw.get("field_sources") or {}
+    default_src = raw.get("source")
+    sources: dict[str, str] = {}
+    for name, value in (
+        ("base_msrp", base_msrp),
+        ("fuel_type", fuel_type),
+        ("horsepower", horsepower),
+        ("drivetrain", drivetrain),
+        ("seating_capacity", seating_capacity),
+        ("dimensions", dims_present or None),
+    ):
+        if value is not None:
+            src = field_sources.get(name, default_src)
+            if src is not None:
+                sources[name] = src
+
     return Trim(
         year=int(raw["year"]),
         make=str(raw["make"]),
         model=str(raw["model"]),
         trim=str(raw["trim"]),
-        base_msrp=_to_int(raw.get("base_msrp")),
-        fuel_type=_map_fuel(raw.get("fuel_type")),
-        horsepower=_to_int(raw.get("horsepower")),
-        drivetrain=_map_drivetrain(raw.get("drivetrain")),
-        seating_capacity=_to_int(raw.get("seating_capacity")),
+        base_msrp=base_msrp,
+        fuel_type=fuel_type,
+        horsepower=horsepower,
+        drivetrain=drivetrain,
+        seating_capacity=seating_capacity,
         dimensions=dimensions,
         notes=raw.get("notes"),
         source=raw.get("source"),
+        sources=sources,
     )
 
 

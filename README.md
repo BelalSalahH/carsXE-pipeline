@@ -11,7 +11,7 @@ Ships with **Toyota** (Camry, RAV4, Tacoma) and **Honda** (Civic, Accord, CR-V),
 ## Requirements
 
 - Python 3.12+
-- No third-party runtime dependencies (standard library only)
+- Runtime: `certifi` (CA bundle for live source fetches; see Source rationale)
 - `pytest` for tests
 
 ## How to run
@@ -30,7 +30,11 @@ python -m spec_collector --make all --out specs.json --log-level DEBUG
 | `--make` | `toyota` | OEM to collect: `toyota`, `honda`, or `all` |
 | `--models` | all | Optional model filter, space-separated (case-insensitive) |
 | `--out` | `output.json` | Output path |
+| `--refresh-sources` | off | Force a live re-fetch of external sources (EPA) and update the cache |
 | `--log-level` | `INFO` | Logging verbosity |
+
+Runs are offline by default: external-source data is read from a committed cache,
+so no network is required unless you pass `--refresh-sources`.
 
 Run the tests:
 
@@ -56,13 +60,23 @@ A JSON array, one record per trim:
   "seating_capacity": 5,
   "dimensions": {"length_in": 193.5, "width_in": 72.2, "height_in": 56.9, "wheelbase_in": 111.2},
   "notes": null,
-  "source": "Toyota USA model specs (toyota.com) — curated 2026, ..."
+  "source": "curated:honda.com (...)",
+  "sources": {
+    "drivetrain": "epa:fueleconomy.gov",
+    "horsepower": "curated:honda.com",
+    "base_msrp": "curated:honda.com",
+    "fuel_type": "curated:honda.com",
+    "seating_capacity": "curated:honda.com",
+    "dimensions": "curated:honda.com"
+  }
 }
 ```
 
 `fuel_type` ∈ {gas, hybrid, phev, ev, diesel}; `drivetrain` ∈ {FWD, RWD, AWD, 4WD}.
-`notes` carries year-fallback annotations; `source` carries provenance. Any
-unconfirmed value is `null`.
+`notes` carries year-fallback annotations. `sources` is a **per-field provenance
+map** — it shows exactly which source supplied each value (e.g. Honda drivetrain
+comes from EPA, the rest from curated data). Any unconfirmed value is `null` and
+gets no `sources` entry.
 
 ## Architecture
 
@@ -84,8 +98,12 @@ src/spec_collector/
 ├── retry.py          # retry/backoff decorator for the collection step
 └── providers/
     ├── base.py       # OEMProvider ABC + JSON-file-backed base
-    ├── toyota/       # ToyotaProvider + curated source_data.json
-    └── honda/        # HondaProvider + curated source_data.json
+    ├── sources/      # external sources a provider can reconcile
+    │   ├── http.py   # JSON-over-HTTPS GET (certifi TLS + retry)
+    │   ├── epa.py    # EPA drivetrain source (cache-first, live refresh)
+    │   └── cache/    # committed EPA cache fixture (offline/reproducible)
+    ├── toyota/       # ToyotaProvider (single curated source)
+    └── honda/        # HondaProvider (curated + EPA, per-field provenance)
 ```
 
 **Adding an OEM** (e.g. Nissan): create `providers/nissan/` with a provider
@@ -95,17 +113,34 @@ provider pattern.
 
 ## Source rationale
 
-Specs are curated into per-OEM `source_data.json` files, sourced from the
-manufacturers' official US spec pages (`toyota.com`, `honda.com`).
+**Toyota — single curated source.** Specs come from a curated `source_data.json`
+sourced from Toyota's official US spec pages. Curated-over-scraping was a
+deliberate call: official OEM pages are JS-rendered and ToS-sensitive, so brittle
+selectors would dominate the effort while producing *less* trustworthy data. The
+curated file sits behind the same `collect()` interface a real scraper/feed
+would, so swapping in a live fetch later is provider-internal.
 
-A single authoritative source per OEM, curated, was chosen over live scraping
-deliberately. Official OEM pages are JS-rendered and ToS-sensitive; in a small
-slice, brittle selectors would dominate the effort while producing *less*
-trustworthy data. A curated source keeps the run **deterministic, re-runnable,
-and verifiable**, and — crucially — sits behind the same `collect()` interface a
-real scraper or licensed feed would. Swapping in a live fetch later is a
-provider-internal change; the `@with_retry` seam on the read step is already in
-place for that transition.
+**Honda — multi-source reconciliation (curated + EPA).** Honda demonstrates the
+real goal: combining sources with per-field provenance. After probing the free
+options, the division of labor is:
+
+| Field | Source | Why |
+|-------|--------|-----|
+| `drivetrain` | **EPA** (fueleconomy.gov, live) | EPA's model taxonomy + `drive` field give authoritative, verifiable FWD/AWD per model |
+| `fuel_type`, `horsepower`, `base_msrp`, `seating_capacity`, `dimensions` | curated | EPA exposes none of these; no free API provides MSRP at all |
+
+EPA was scoped to **drivetrain only** on purpose: it's the one field EPA reports
+unambiguously and uniformly within a model name. Fuel/HP/MSRP are not in EPA (the
+`hpv` field is not horsepower, and there is no price field), so claiming them from
+EPA would be dishonest — they stay curated and are labeled as such in `sources`.
+
+The EPA source is **cache-first with live refresh**: a committed cache fixture
+makes every run reproducible and offline-capable (and keeps tests off the
+network); `--refresh-sources` forces a live re-fetch and updates the cache. TLS
+uses `certifi` because some Python installs lack a usable system trust store.
+
+This is the seam for scaling: a paid feed (Edmunds/MarketCheck) for MSRP, or a
+real OEM scraper, becomes just another source reconciled the same way.
 
 ## Missing data strategy
 
@@ -143,14 +178,21 @@ container.
 
 ## Known limitations
 
-- The curated data is a hand-verified **snapshot**; some 2026 trims/pricing may
-  not be officially published yet and should be re-verified against the OEM. Each
-  record's `source` field flags this, and `notes` is reserved for year-fallback
-  annotations.
-- Collection is file-backed today. Real per-OEM adapters (HTTP/scraper or
-  licensed feed) would slot behind the existing `collect()` interface and reuse
-  `@with_retry`.
-- No multi-source reconciliation (single source per OEM by design for this slice).
+- The curated specs (HP, MSRP, fuel, seating, dimensions) are a hand-verified
+  **snapshot**; some 2026 trims/pricing may not be officially published yet and
+  should be re-verified against the OEM. Each record's `source` field flags this,
+  and `notes` is reserved for year-fallback annotations. Honda's drivetrain is the
+  exception — it is reconciled live from EPA and labeled as such in `sources`.
+- Multi-source reconciliation is **drivetrain-only** for now: EPA supplies the one
+  field it reports unambiguously; HP/MSRP/fuel/seating/dimensions remain curated
+  because no free source exposes them (MSRP in particular has no free API). A paid
+  feed (Edmunds/MarketCheck) or a real OEM scraper would slot in as another source
+  behind the same per-field reconciliation seam.
+- Toyota is still single-source (curated). The provider pattern makes adding EPA or
+  another source to Toyota the same drop-in change Honda already demonstrates.
+- The one runtime dependency is `certifi`, used only for live EPA fetches; default
+  runs are offline (cache-backed) and need no network. `--refresh-sources` is the
+  only path that hits the wire.
 - Validation is advisory (warnings), not enforced — a stricter mode that fails CI
   on schema/plausibility violations would be the next step.
 - Fields are limited to the assessment's required set; MPG, cargo, and weight are
